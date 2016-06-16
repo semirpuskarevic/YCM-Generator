@@ -421,6 +421,8 @@ def generate_ycm_conf(flags, config_file):
     config_file: the path to save the configuration file at'''
 
     template_file = os.path.join(ycm_generator_dir, "template.py")
+    syntastic_file = os.path.join(os.path.dirname(config_file),".syntastic_cpp_config")
+    open(syntastic_file,"w").write("\n".join(flags))
 
     with open(template_file, "r") as template:
         with open(config_file, "w") as output:

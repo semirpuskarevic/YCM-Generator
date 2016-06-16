@@ -131,6 +131,3 @@ def FlagsForFile( filename, **kwargs ):
     'flags': final_flags,
     'do_cache': True
   }
-
-
-open(".syntastic_cpp_config","w").write("\n".join(flags))
