@@ -231,6 +231,26 @@ def fake_build(project_dir, c_build_log_path, cxx_build_log_path, verbose, make_
         if(cache_tmp):
             shutil.move(cache_tmp, cache_path)
 
+    # execute the build system
+    elif(os.path.exists(os.path.join(project_dir, "meson.build"))):
+        # meson
+        # run meson in a temporary directory, then compile the project as usual
+        build_dir = tempfile.mkdtemp()
+        proc_opts["cwd"] = build_dir
+
+        print("Running meson in '{}'...".format(build_dir))
+        sys.stdout.flush()
+        run(["meson", project_dir, build_dir] + configure_opts, env=env_config, **proc_opts)
+
+        print("\nRunning ninja ...")
+        sys.stdout.flush()
+        run(["ninja"], env=env, **proc_opts)
+
+        print("\nCleaning up...")
+        print("")
+        sys.stdout.flush()
+        shutil.rmtree(build_dir)
+
     elif(os.path.exists(os.path.join(project_dir, "configure"))):
         # autotools
         # perform build in-tree, since not all projects handle out-of-tree builds correctly
