@@ -3,6 +3,7 @@ let s:config_gen = expand("<sfile>:p:h:h") . "/config_gen.py"
 
 command! -nargs=? -complete=file_in_path -bang CCGenerateConfig call s:GenerateConfig("cc", <bang>0, "<args>")
 command! -nargs=? -complete=file_in_path -bang YcmGenerateConfig call s:GenerateConfig("ycm", <bang>0, "<args>")
+command! YcmGenerateMesonConfig call s:MesonicYcmConfig()
 
 function! s:GenerateConfig(fmt, overwrite, flags)
     let l:cmd = "! " . s:config_gen . " -F " . a:fmt . " " . a:flags
@@ -14,10 +15,16 @@ function! s:GenerateConfig(fmt, overwrite, flags)
     " Only append the working directory if the last option is a flag
     let l:split_flags = split(a:flags)
     if len(l:split_flags) == 0 || l:split_flags[-1] =~ "^-"
-        let l:cmd = l:cmd . " " . shellescape(getcwd())
+        " let l:cmd = l:cmd . " " . shellescape(getcwd())
+        let l:cmd = l:cmd . " " . shellescape(g:MesonProjectDir)
     endif
 
     " Disable interactive prompts for consistency with Neovim
     execute l:cmd . " </dev/null"
+endfunction
+
+function! s:MesonicYcmConfig()
+  let l:cmd = "! " . s:config_gen . " -F ycm -f " . g:MesonProjectDir()
+  execute l:cmd . " </dev/null"
 endfunction
 
