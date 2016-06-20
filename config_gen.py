@@ -422,7 +422,9 @@ def generate_ycm_conf(flags, config_file):
 
     template_file = os.path.join(ycm_generator_dir, "template.py")
     syntastic_file = os.path.join(os.path.dirname(config_file),".syntastic_cpp_config")
+    clang_config = os.path.join(os.path.dirname(config_file),".clang_complete")
     open(syntastic_file,"w").write("\n".join(flags))
+    open(clang_config,"w").write("\n".join(flags))
 
     with open(template_file, "r") as template:
         with open(config_file, "w") as output:
