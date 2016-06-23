@@ -8,10 +8,10 @@ command! YcmGenerateMesonConfig call s:MesonicYcmConfig()
 function! s:GenerateConfig(fmt, overwrite, flags)
     let l:cmd = "! " . s:config_gen . " -F " . a:fmt . " " . a:flags
 
-    if a:overwrite
-        let l:cmd = l:cmd . " -f"
-    endif
-
+    " if a:overwrite
+    "     let l:cmd = l:cmd . " -f"
+    " endif
+    "
     " Only append the working directory if the last option is a flag
     let l:split_flags = split(a:flags)
     if len(l:split_flags) == 0 || l:split_flags[-1] =~ "^-"
