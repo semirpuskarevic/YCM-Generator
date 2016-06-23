@@ -9,7 +9,7 @@ function! s:GenerateConfig(fmt, overwrite, flags)
     let l:cmd = "! " . s:config_gen . " -F " . a:fmt . " " . a:flags
 
     " if a:overwrite
-    "     let l:cmd = l:cmd . ' -f'
+        let l:cmd = l:cmd . ' -f'
     " endif
     "
     " Only append the working directory if the last option is a flag
