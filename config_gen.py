@@ -176,6 +176,8 @@ def fake_build(project_dir, c_build_log_path, cxx_build_log_path, verbose, make_
     env["CXX"] = "clang++"
     env["YCM_CONFIG_GEN_CC_LOG"] = c_build_log_path
     env["YCM_CONFIG_GEN_CXX_LOG"] = cxx_build_log_path
+    if os.environ.has_key("PKG_CONFIG_PATH"):
+        env["PKG_CONFIG_PATH"] = os.environ["PKG_CONFIG_PATH"] 
 
     # used during configuration stage, so that cmake, etc. can verify what the compiler supports
     env_config = env.copy()
