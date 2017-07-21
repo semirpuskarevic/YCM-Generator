@@ -423,6 +423,7 @@ def generate_ycm_conf(flags, config_file):
 
     flags: the list of flags
     config_file: the path to save the configuration file at'''
+    flags = map(lambda s: re.sub('-I(\.\.\/)+', '-I/', s), flags)
 
     template_file = os.path.join(ycm_generator_dir, "template.py")
     syntastic_file = os.path.join(os.path.dirname(config_file),".syntastic_cpp_config")
